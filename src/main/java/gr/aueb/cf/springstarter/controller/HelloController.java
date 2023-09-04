@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 
@@ -21,5 +22,16 @@ public class HelloController {
     public  String getDate(Model model){
       model.addAttribute("dateTxt", new Date());
       return "date";
+    }
+
+    @GetMapping("/messages")
+    public String getMessage(@RequestParam("title") String title, Model model){
+        if(title.equals("CF")){
+            model.addAttribute("message", "Hello CF");
+            return "message";
+        }else {
+            model.addAttribute("msg", "There is an error in request param");
+            return "error";
+        }
     }
 }
