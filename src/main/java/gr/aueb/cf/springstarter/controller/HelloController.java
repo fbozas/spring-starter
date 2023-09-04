@@ -1,11 +1,9 @@
 package gr.aueb.cf.springstarter.controller;
 
+import gr.aueb.cf.springstarter.dto.StudentInsertDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -34,4 +32,17 @@ public class HelloController {
             return "error";
         }
     }
+
+    @RequestMapping(path = "/student/insert", method = RequestMethod.GET)
+    public String getStudentForm(Model model){
+        model.addAttribute("studentInsertDto", new StudentInsertDTO());
+        return "student/insert";
+    }
+
+    @RequestMapping(path = "/student/insert", method = RequestMethod.POST)
+    public String insertStudent(@ModelAttribute("studentInsertDto") StudentInsertDTO dto, Model model){
+        model.addAttribute("dto", dto);
+        return "student/success";
+    }
+
 }

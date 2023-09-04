@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Εγγραφή εκπαιδευόμενου</title>
+</head>
+<body>
+  <div th:object="${studentInsertDto}">
+    <form method="post">
+      <div>
+        <span>Εγγραφή εκπαιδευόμενου</span>
+      </div>
+      <div>
+        <input id="firstname" type="text" placeholder="Όνομα" name="firstname" th:field="*{firstname}">
+      </div>
+      <div>
+        <input id="lastname" type="text" placeholder="Επώνυμο" name="lastname" th:field="*{lastname}">
+      </div>
+      <input type="submit" value="Εισαγωγή">
+    </form>
+  </div>
+</body>
+</html>
