@@ -1,16 +1,28 @@
 package gr.aueb.cf.springstarter.controller;
 
 import gr.aueb.cf.springstarter.dto.StudentInsertDTO;
+import gr.aueb.cf.springstarter.validator.StudentInsertValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 @Controller
 @RequestMapping("/hello-app")
 public class HelloController {
-//    @RequestMapping(path = "/coding-factory", method = RequestMethod.GET)
+
+    private final StudentInsertValidator studentInsertValidator;
+
+    @Autowired
+    public HelloController(StudentInsertValidator studentInsertValidator) {
+        this.studentInsertValidator = studentInsertValidator;
+    }
+
+    //    @RequestMapping(path = "/coding-factory", method = RequestMethod.GET)
     @GetMapping("/hello-world")
     public String getHello(){
         return "index";
@@ -40,7 +52,11 @@ public class HelloController {
     }
 
     @RequestMapping(path = "/student/insert", method = RequestMethod.POST)
-    public String insertStudent(@ModelAttribute("studentInsertDto") StudentInsertDTO dto, Model model){
+    public String insertStudent(@Valid  @ModelAttribute("studentInsertDto") StudentInsertDTO dto, BindingResult bindingResult, Model model){
+        studentInsertValidator.validate(dto,bindingResult);
+        if(bindingResult.hasErrors()){
+            return "student/insert";
+        }
         model.addAttribute("dto", dto);
         return "student/success";
     }
